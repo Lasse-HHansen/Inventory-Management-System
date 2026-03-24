@@ -5,22 +5,61 @@ class Program
     static void Main(string[] args)
     {
         Inventory myWareHouse = new Inventory();
-        Product computer = new Product(1, "Gaming Computer", 8999.00m, 22);
-        Product phone = new Product(2, "iPhone 17 Pro", 9999.99m, 14);
-        Product keyboard = new Product(3, "KeyChrone", 1300.00m, 23);
-        Product mouse = new Product(4, "Logitech MX", 799.00m, 10);
+        bool running = true;
 
-        myWareHouse.AddProduct(computer);
-        myWareHouse.AddProduct(phone);
-        myWareHouse.AddProduct(keyboard);
-        myWareHouse.AddProduct(mouse);
+        while (running)
+        {
+            Console.WriteLine("\n --- Inventory System ---");
+            Console.WriteLine("1. Show all products");
+            Console.WriteLine("2. Add a new product");
+            Console.WriteLine("3. Opdate inventory");
+            Console.WriteLine("4. Close");
+            Console.Write("\n Press a number ");
 
-        // Adding to the inventory
-        myWareHouse.UpdateStock(4, 5);
+            string? input = Console.ReadLine();
 
-        // Showing the entire inventory
-        Console.WriteLine("--- Inventory ---");
-        myWareHouse.ShowInventory();
+            switch (input)
+            {
+                case "1":
+                    myWareHouse.ShowInventory();
+                    break;
+                case "2":
+                    Console.WriteLine("\n --- Add a new product ---");
+                    Console.Write("Enter ID: ");
+                    int id = int.Parse(Console.ReadLine() ?? "0"); 
+
+                    Console.Write("Enter Name: ");
+                    string name = Console.ReadLine() ?? "Unknown";
+
+                    Console.Write("Enter Price: ");
+                    decimal price = decimal.Parse(Console.ReadLine() ?? "0");
+
+                    Console.Write("Enter Quantity");
+                    int quantity = int.Parse(Console.ReadLine() ?? "0");
+
+                    myWareHouse.AddProduct(new Product(id, name, price, quantity));
+                    Console.WriteLine("Product added successfully");
+                    break; 
+                case "3":
+                    Console.WriteLine("\n --- Update Stock ---");
+                    Console.Write("Enter Product ID");
+                    int updateId = int.Parse(Console.ReadLine() ?? "0");
+
+                    Console.WriteLine("Enter amount to add (You can also use negative to remove): ");
+                    int amount = int.Parse(Console.ReadLine() ?? "0");
+
+                    myWareHouse.UpdateStock(updateId, amount);
+                    break;
+                case "4":
+                    running = false;
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice");
+                    break;
+
+
+            }
+        }
     }
     
 }
